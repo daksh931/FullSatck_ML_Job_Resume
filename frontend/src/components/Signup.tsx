@@ -1,7 +1,7 @@
-// Signup.tsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "sonner";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -14,62 +14,72 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      console.log("API URLs:");
       console.log("API URL:", import.meta.env.VITE_API_URL);
-      console.log("object")
-
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/signup`, { name, email, password });
-      console.log(response)
+      console.log(response);
+      toast.success("🎉 Signup Successful!", {
+        description: "You have successfully registered. Redirecting to login...",
+      });
       navigate("/login"); // Redirect to login page after successful signup
     } catch (error) {
-      setError("Error registering. Please try again.");
+      toast.error("❌ Signup Failed!", {
+        description: "Something went wrong. Please try again.",
+      });
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <div className="w-full max-w-xs">
-        <form onSubmit={handleSignup} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          <h2 className="text-center text-2xl font-bold mb-4">Signup</h2>
-          <div className="mb-4">
-            <label className="block text-sm font-bold mb-2" htmlFor="name">Name</label>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="w-full max-w-sm bg-white shadow-lg rounded-lg p-6">
+        <h2 className="text-center text-2xl font-semibold text-gray-700 mb-6">Sign Up</h2>
+        <form onSubmit={handleSignup} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700" htmlFor="name">Name</label>
             <input
               type="text"
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="border w-full p-2 rounded"
+              className="border border-gray-300 w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               placeholder="Enter your name"
               required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-bold mb-2" htmlFor="email">Email</label>
+          <div>
+            <label className="block text-sm font-medium text-gray-700" htmlFor="email">Email</label>
             <input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="border w-full p-2 rounded"
+              className="border border-gray-300 w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               placeholder="Enter your email"
               required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-bold mb-2" htmlFor="password">Password</label>
+          <div>
+            <label className="block text-sm font-medium text-gray-700" htmlFor="password">Password</label>
             <input
               type="password"
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="border w-full p-2 rounded"
+              className="border border-gray-300 w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               placeholder="Enter your password"
               required
             />
           </div>
-          {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
-          <button type="submit" className="cursor-pointer  bg-blue-500 text-white w-full py-2 rounded">Signup</button>
+          {error && <div className="text-red-500 text-sm">{error}</div>}
+          <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white w-full py-2 rounded-lg transition">
+            Sign Up
+          </button>
         </form>
+        <p className="text-center text-sm text-gray-600 mt-4">
+          Already a user? 
+          <button onClick={() => navigate("/login")} className="text-blue-500 hover:underline ml-1">
+            Login
+          </button>
+        </p>
       </div>
     </div>
   );

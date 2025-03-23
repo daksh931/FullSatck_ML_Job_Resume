@@ -6,16 +6,19 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import Welcome from './components/Welcome';
 import PrivateRoute from './components/PrivateRoute';
+import { Toaster } from "sonner";
+import ResumeHandle from './components/ResumeHandle';
 
 function App() {
-
 
   return (
    
    <Router>
+<Toaster position="top-right" richColors />
 <Routes>
   <Route path='/login' element={<Login />} />
   <Route path='/signup' element={<Signup />} />
+  <Route path='/resume' element={<ResumeHandle />} />
   {/* <Route path='/home' element={<PrivateRoute component={<Welcome/>} />} /> */}
   {/* <PrivateRoute path="/welcome" element={<Welcome />} /> */}
   <Route
