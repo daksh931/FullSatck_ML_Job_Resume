@@ -30,7 +30,7 @@ const ResumeUpload = () => {
       setToastId(id);
 
       const response = await axios.post(
-        "http://localhost:5000/api/upload",
+        `${import.meta.env.VITE_API_URL}/upload`,
         formData,
         { headers: { "Content-Type": "multipart/form-data"} }
       );
