@@ -1,12 +1,16 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "module": "CommonJS",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "noImplicitAny": false // This may help with more lenient typing
-  }
+    "target": "ES6",                    // Target ES6 output
+    "module": "CommonJS",                // Use CommonJS module system
+    "strict": true,                      // Enable strict type-checking options
+    "esModuleInterop": true,             // Enables ES Module interoperability
+    "skipLibCheck": true,                // Skip type checking of declaration files
+    "forceConsistentCasingInFileNames": true, // Ensure consistent casing in file names
+    "resolveJsonModule": true,           // Allow importing of .json files
+    "noImplicitAny": false,              // Allow variables with `any` type (optional)
+    "outDir": "./dist",                  // Output directory for compiled JavaScript files
+    "rootDir": "./src"                   // Root directory where your TypeScript files are located
+  },
+  "include": ["src/**/*.ts"],             // Include all TypeScript files in the src folder
+  "exclude": ["node_modules"]             // Exclude node_modules folder from being compiled
 }
