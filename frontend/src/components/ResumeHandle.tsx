@@ -32,7 +32,9 @@ const ResumeUpload = () => {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/upload`,
         formData,
-        { headers: { "Content-Type": "multipart/form-data"} }
+        { headers: { "Content-Type": "multipart/form-data"},
+        // withCredentials: true,
+       }
       );
 
       if (response.status === 200) {

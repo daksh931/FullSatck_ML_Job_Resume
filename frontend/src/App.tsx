@@ -8,6 +8,7 @@ import Welcome from './components/Welcome';
 import PrivateRoute from './components/PrivateRoute';
 import { Toaster } from "sonner";
 import ResumeHandle from './components/ResumeHandle';
+import JobsAPI from './components/JobAPI';
 
 function App() {
 
@@ -16,7 +17,8 @@ function App() {
    <Router>
 <Toaster position="top-right" richColors />
 <Routes>
-  <Route path='/login' element={<Login />} />
+  <Route path='/' element={<Login />} />
+  <Route path='/jobs' element={<JobsAPI />} />
   <Route path='/signup' element={<Signup />} />
   <Route path='/resume' element={<ResumeHandle />} />
   {/* <Route path='/home' element={<PrivateRoute component={<Welcome/>} />} /> */}
