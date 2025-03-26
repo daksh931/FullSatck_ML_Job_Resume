@@ -1,18 +1,27 @@
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv"
 import uploadRoutes from "./routes/upload";
 import authRoutes from "./routes/authRoutes";
-import MatchJobs from "./routes/Matchjobs";
+import MatchJobs from "./routes/MatchJobs";
 import axios from "axios"
 import Job from "./models/Job";
 // dotenv.config();
 
 const app = express();
-
-app.use(cors());
+//cheking auto commit code
+// app.use(cors());
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.use(express.json());
+
+// wrporking on ec2 
+// const corsOptions = {
+//   origin: 'https://full-satck-ml-job-resume.vercel.app',
+//   credentials: true,
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow these HTTP met>
+//   allowedHeaders: ['Content-Type', 'Authorization'], // Allow these headers
+// };
+
+// app.use(cors(corsOptions));
 
 // Routes
 app.use("/api/auth", authRoutes);
@@ -61,8 +70,6 @@ app.get("/api/jobs", async (req,res) => {
 		console.error(error);
 	}
   });
-  
-
 
 app.use("/api/upload", uploadRoutes);
 app.use("/api/matchJobs", MatchJobs);

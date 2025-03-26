@@ -1,0 +1,39 @@
+name: Deploy Backend to EC2
+
+on:
+  push:
+    paths:
+      - 'backend/**'   # Only trigger when changes are made in the backend folder
+    branches:
+      - main           # Trigger the action only on changes to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}  # Secret for EC2 SSH private key
+
+      - name: Install dependencies
+        run: |
+          cd FullSatck_ML_Job_Resume/backend
+          npm install  # or your backend's dependency manager (e.g., yarn)
+      
+      - name: Compile TypeScript
+        run: |
+          npx tsc  # Compile TypeScript files to JavaScript
+      
+      - name: Deploy to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_IP }} << 'EOF'
+            cd /path/to/your/project
+            git pull origin main  # Make sure to use your actual git pull command
+            npm install  # Install the backend dependencies if needed
+            pm2 restart backend  # Or any other way you start your server (e.g., node server.js)
+          EOF
