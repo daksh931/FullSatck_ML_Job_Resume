@@ -2,12 +2,13 @@ import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import { toast } from "sonner"; // Import Sonner for notifications
+import { useNavigate } from "react-router-dom";
 
 const ResumeUpload = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [toastId, setToastId] = useState<string | number | undefined >(""); // To store the toast ID
-
+  const navigate = useNavigate();
   const { getRootProps, getInputProps } = useDropzone({
     accept: { "application/pdf": [".pdf"] },
     onDrop: (acceptedFiles) => {
@@ -23,12 +24,22 @@ const ResumeUpload = () => {
 
     const formData = new FormData();
     formData.append("resume", selectedFile);
+    const email = localStorage.getItem("user");
+
+    // Make sure the email exists in localStorage
+    if (!email) {
+      toast.error("No email found in localStorage. Please login again.");
+      return;
+    }
+  
+    // Append email to the form data
+    formData.append("email", email);
 
     try {
       setUploading(true);
       const id = toast.loading("Uploading resume...");
       setToastId(id);
-
+      
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/upload`,
         formData,
@@ -40,6 +51,7 @@ const ResumeUpload = () => {
       if (response.status === 200) {
         toast.dismiss(id);
         toast.success("✅ Resume uploaded successfully!", { id: toastId });
+        navigate('/RecommendedJobs')
       } else {
         toast.error("Error uploading file. Please try again.", { id: toastId });
       }
@@ -55,6 +67,9 @@ const ResumeUpload = () => {
       <div className="bg-white shadow-lg rounded-xl p-8 max-w-lg w-full">
         <h2 className="text-2xl font-semibold text-center mb-4 text-gray-800">
           Upload Your Resume and Take the Next Step in Your Career
+        </h2>
+        <h2 className="text-2xl font-semibold text-center mb-4 text-gray-800">
+          Please Upload Your Resume For presonal recommendation...
         </h2>
         <p className="text-center text-gray-600 mb-6">
           Upload your resume to easily apply for the latest job opportunities. We support PDF format, so make sure your resume is ready to go!

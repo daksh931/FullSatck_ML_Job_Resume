@@ -15,10 +15,8 @@ const Signup = () => {
 
     try {
       setError(null)
-      console.log("API URL:", import.meta.env.VITE_API_URL);
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/signup`, { name, email, password }, {
-        withCredentials: true, // Include cookies with the request
-      });
+      // console.log("API URL:", import.meta.env.VITE_API_URL);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/signup`, { name, email, password },);
       console.log(response);
       toast.success(" Signup Successful!", {
         description: "You have successfully registered. Redirecting to login...",

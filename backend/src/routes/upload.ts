@@ -3,6 +3,8 @@ import multer from "multer";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import dotenv from "dotenv";
 import { randomUUID } from "crypto";
+import { exit } from "process";
+import User from "../models/User";
 
 dotenv.config();
 
@@ -34,7 +36,8 @@ const uploadHandler: RequestHandler = async (
   
       const file = req.file;
       const fileKey = `resumes/${randomUUID()}_${file.originalname}`;
-  
+      
+
       const uploadParams = {
         Bucket: process.env.AWS_S3_BUCKET_NAME!,
         Key: fileKey,
@@ -47,8 +50,16 @@ const uploadHandler: RequestHandler = async (
   
       const fileUrl = `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileKey}`;
   
+      const { email } = req.body;
+      if (!email) {
+        res.status(400).send("Email is required.");
+      }
+
+      await User.updateOne({ email }, { resumeUrl:fileUrl });
+      
       res.json({ fileUrl });
-      console.log(fileUrl);
+      
+      // console.log(fileUrl);
     } catch (err) {
       console.error("S3 Upload Error:", err);
       res.status(500).json({ error: "Error uploading file" });

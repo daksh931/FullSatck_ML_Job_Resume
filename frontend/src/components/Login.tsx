@@ -14,10 +14,11 @@ const Login = () => {
 
     try {
       setError(null)
-      console.log(email, password);
+      // console.log(email, password);
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, { email, password });
-      console.log(response);
+      // console.log(response);
       localStorage.setItem("token", response.data.token); // Save JWT token in localStorage
+      localStorage.setItem("user", email); 
       toast.success("🎉 Login Successful!", {
         description: "You have successfully Logged in.",
       });

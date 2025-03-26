@@ -9,6 +9,8 @@ import PrivateRoute from './components/PrivateRoute';
 import { Toaster } from "sonner";
 import ResumeHandle from './components/ResumeHandle';
 import JobsAPI from './components/JobAPI';
+import RecommendedJobs from './components/RecommendedJobs';
+import HeroSection from './components/HeroSection';
 
 function App() {
 
@@ -17,21 +19,16 @@ function App() {
    <Router>
 <Toaster position="top-right" richColors />
 <Routes>
-  <Route path='/' element={<Login />} />
+  <Route path='/login' element={<Login />} />
   <Route path='/jobs' element={<JobsAPI />} />
   <Route path='/signup' element={<Signup />} />
   <Route path='/resume' element={<ResumeHandle />} />
-  {/* <Route path='/home' element={<PrivateRoute component={<Welcome/>} />} /> */}
-  {/* <PrivateRoute path="/welcome" element={<Welcome />} /> */}
-  <Route
-          path="/welcome"
+  <Route path='/RecommendedJobs' element={<RecommendedJobs />} />
+  <Route path='/' element={<HeroSection />} />
+  <Route path="/welcome"
           element={<PrivateRoute element={<Welcome />} />}
         />
-
   <Route path="*" element={<div>Page Not Found</div>} />
-{/* <div className="flex justify-center items-center h-screen bg-gray-100">
-   <HeroSection />
- </div> */}
 </Routes>
    </Router>
    

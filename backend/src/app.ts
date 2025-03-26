@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv"
 import uploadRoutes from "./routes/upload";
 import authRoutes from "./routes/authRoutes";
+import MatchJobs from "./routes/Matchjobs";
 import axios from "axios"
 import Job from "./models/Job";
 // dotenv.config();
@@ -64,4 +65,5 @@ app.get("/api/jobs", async (req,res) => {
 
 
 app.use("/api/upload", uploadRoutes);
+app.use("/api/matchJobs", MatchJobs);
 export default app;

@@ -4,6 +4,8 @@ const userSchema = new mongoose.Schema({
     name: {type:String, required:true },
     email: {type:String, required:true, unique:true },
     password: {type:String, required:true },
+    resumeUrl: { type: String, default: null },
+    jobs:[{type: mongoose.Schema.Types.ObjectId , ref:"Job"}]
 },
 {timestamps: true})
 
