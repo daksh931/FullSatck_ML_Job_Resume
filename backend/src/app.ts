@@ -8,7 +8,7 @@ import Job from "./models/Job";
 // dotenv.config();
 
 const app = express();
-//cheking auto commit code
+//cheking auto CICD code
 // app.use(cors());
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.use(express.json());
