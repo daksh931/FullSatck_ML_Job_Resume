@@ -8,7 +8,7 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   try {
     const { email } = req.body; // Get email from frontend
-    console.log(email);
+    // console.log(email);
     if (!email) {
       return res.status(400).json({ error: "Email is required" });
     }

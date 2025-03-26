@@ -7,10 +7,7 @@ import {signup} from "../controllers/userController";
 
 const router = express.Router();
 
-
-
 router.post("/signup",signup)
-
 
 // Login Route
 router.post("/login", async (req, res) => {

@@ -66,7 +66,6 @@ const uploadHandler: RequestHandler = async (
     }
   };
   
-
 const router = require("express").Router();
 router.post("/", upload.single("resume"), uploadHandler);
 
