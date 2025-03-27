@@ -2,38 +2,42 @@ name: Deploy Backend to EC2
 
 on:
   push:
-    paths:
-      - 'backend/**'   # Only trigger when changes are made in the backend folder
     branches:
-      - main           # Trigger the action only on changes to the main branch
+      - main
+    paths:
+      - "backend/**"  # Trigger only if backend files change
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-      - name: Set up SSH key
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}  # Secret for EC2 SSH private key
+      - name: Create SSH Key File
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.EC2_IP }} >> ~/.ssh/known_hosts
 
-      - name: Install dependencies
-        run: |
-          cd FullSatck_ML_Job_Resume/backend
-          npm install  # or your backend's dependency manager (e.g., yarn)
-      
-      - name: Compile TypeScript
-        run: |
-          npx tsc  # Compile TypeScript files to JavaScript
-      
       - name: Deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_IP }} << 'EOF'
-            cd /path/to/your/project
-            git pull origin main  # Make sure to use your actual git pull command
-            npm install  # Install the backend dependencies if needed
-            pm2 restart backend  # Or any other way you start your server (e.g., node server.js)
+          ssh -i ~/.ssh/id_rsa ec2-user@${{ secrets.EC2_IP }} << 'EOF'
+            cd /home/ec2-user/FullSatck_ML_Job_Resume/backend
+            
+            echo "Pulling latest changes..."
+            git pull origin main  # Pull latest changes
+            
+            echo "Installing dependencies..."
+            npm install  # Install dependencies
+            
+            echo "Compiling TypeScript..."
+            npm run build  # Run TypeScript compiler
+            
+            echo "Restarting backend..."
+            pm2 restart my-app || pm2 start npm --name "backend" -- start  # Restart backend using PM2
+
+            echo "Deployment completed!!"
           EOF
