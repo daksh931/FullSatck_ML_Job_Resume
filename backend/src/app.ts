@@ -13,7 +13,7 @@ const app = express();
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.use(express.json());
 
-// wrporking on ec2 
+// wrporking on ec2 ec2
 // const corsOptions = {
 //   origin: 'https://full-satck-ml-job-resume.vercel.app',
 //   credentials: true,
