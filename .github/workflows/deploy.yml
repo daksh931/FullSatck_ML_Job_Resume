@@ -17,6 +17,7 @@ jobs:
 
       - name: Add EC2 to Known Hosts
         run: |
+          mkdir -p ~/.ssh 
           ssh-keyscan -H ${{ secrets.HOST_DNS }} > ~/.ssh/known_hosts
           cat ~/.ssh/known_hosts  # Check if key was added
 
