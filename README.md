@@ -18,6 +18,7 @@ Perosnal job recommendation system.
 - **Backend:** Node.js, Express.js, MongoDB
 - **Frontend:** ReactJs, Tailwind 
 - **Machine Learning:** NLP-based skill extraction, spacy
+- **Flask App** : Python
 - **Deployment:** AWS EC2 t2micro AWS machine.
 - **File Storage:** AWS S3
 
@@ -36,7 +37,7 @@ This project is deployed on an **AWS EC2 instance**.
    - cd frontend -
      npm run dev
 
-for production have to transpile ts code to js -> tsc 
+For production have to transpile ts code to js -> tsc 
 then deploy.
 Have to use seperate servers for frontend and backend.
 Finally FLASK API on different server --> refer to repo -> https://github.com/daksh931/JobForceMLModel.git 
