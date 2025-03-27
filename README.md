@@ -28,7 +28,18 @@ This project is deployed on an **AWS EC2 instance**.
 1. Clone the repo:
    ```bash
    git clone https://github.com/daksh931/FullSatck_ML_Job_Resume.git
-   cd job-recommendation-system
+   cd FullSatck_ML_Job_Resume
+2. setup env variables see from .env.local example which env are required in both fronend and backend folder seperately.
+3. Run
+   - cd backend -
+     npm run dev
+   - cd frontend -
+     npm run dev
+
+for production have to transpile ts code to js -> tsc 
+then deploy.
+Have to use seperate servers for frontend and backend.
+Finally FLASK API on different server --> refer to repo -> https://github.com/daksh931/JobForceMLModel.git 
 
 You can use the app freely...  
 NOTE -
