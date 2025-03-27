@@ -48,8 +48,8 @@ email - user@gmail.com
 password - user123
 
 
-You can use the app freely...  
-NOTE -
+# You can use the app freely...  
+# NOTE -
 -> Please use signup before uploading your resume, sign up a proper email (eg- user@gmail.com) , proper name atleast of 6 chars long
    and password also atleast 6 chars long. 
 -> Render provides very low infrastructure freely and machine running deployed code over it went down when not in use for a while.
