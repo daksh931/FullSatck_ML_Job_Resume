@@ -42,6 +42,12 @@ then deploy.
 Have to use seperate servers for frontend and backend.
 Finally FLASK API on different server --> refer to repo -> https://github.com/daksh931/JobForceMLModel.git 
 
+
+You can use credentials to login 
+email - user@gmail.com
+password - user123
+
+
 You can use the app freely...  
 NOTE -
 -> Please use signup before uploading your resume, sign up a proper email (eg- user@gmail.com) , proper name atleast of 6 chars long
