@@ -17,13 +17,15 @@ const app = express();
 
 // wrporking on ec2 
 const corsOptions = {
-  origin: 'https://full-satck-ml-job-resume.vercel.app',
-  credentials: true,
+  origin: process.env.FORNTEND_URL,
+  // credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow these HTTP met>
   allowedHeaders: ['Content-Type', 'Authorization'], // Allow these headers
 };
 
 app.use(cors(corsOptions));
+
+app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRoutes);
