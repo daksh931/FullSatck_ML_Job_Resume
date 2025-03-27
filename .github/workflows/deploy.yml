@@ -1,21 +1,43 @@
-name: Check Secrets
+name: Deploy Backend to EC2
 
 on:
   push:
     branches:
       - main
+    paths:
+      - "backend/**"  # Trigger only if backend files change
 
 jobs:
-  check-secrets:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout the repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Check Secrets
+      - name: Create SSH Key File
         run: |
-          echo "Checking Secrets..."
-          echo "EC2_SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}"
-          echo "HOST_DNS: ${{ secrets.HOST_DNS }}"
-          echo "USERNAME: ${{ secrets.USERNAME }}"
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.EC2_IP }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to EC2
+        run: |
+          ssh -i ~/.ssh/id_rsa ec2-user@${{ secrets.EC2_IP }} << 'EOF'
+            cd FullSatck_ML_Job_Resume/backend
+            
+            echo "Pulling latest changes..."
+            git pull origin main  # Pull latest changes
+            
+            echo "Installing dependencies..."
+            npm install  # Install dependencies
+            
+            echo "Compiling TypeScript..."
+            npm run build  # Run TypeScript compiler
+            
+            echo "Restarting backend..."
+            pm2 restart my-app || pm2 start npm --name "backend" -- start  # Restart backend using PM2
+
+            echo "Deployment completed!!"
+          EOF
