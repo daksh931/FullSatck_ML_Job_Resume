@@ -9,19 +9,21 @@ import Job from "./models/Job";
 
 const app = express();
 //changes to ec2 with CICD
-// app.use(cors());
-app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
-app.use(express.json());
-// app.use()
-// wrporking on ec2 
-// const corsOptions = {
-//   origin: 'https://full-satck-ml-job-resume.vercel.app',
-//   credentials: true,
-//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow these HTTP met>
-//   allowedHeaders: ['Content-Type', 'Authorization'], // Allow these headers
-// };
 
-// app.use(cors(corsOptions));
+
+// work locally
+// app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
+// app.use(express.json());
+
+// wrporking on ec2 
+const corsOptions = {
+  origin: 'https://full-satck-ml-job-resume.vercel.app',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow these HTTP met>
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow these headers
+};
+
+app.use(cors(corsOptions));
 
 // Routes
 app.use("/api/auth", authRoutes);
