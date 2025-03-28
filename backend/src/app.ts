@@ -14,7 +14,7 @@ const app = express();
 // app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 // app.use(express.json());
 
-// wrporking on ec2 
+// wrporking on ec2 instance
 const corsOptions = {
   origin: process.env.FRONTEND_URL,
   credentials: true,
