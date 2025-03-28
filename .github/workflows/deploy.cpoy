@@ -20,12 +20,12 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.EC2_IP }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.HOST_DNS }} >> ~/.ssh/known_hosts
 
       - name: Deploy to EC2
         run: |
-          ssh -i ~/.ssh/id_rsa ec2-user@${{ secrets.EC2_IP }} << 'EOF'
-            cd /home/ec2-user/FullSatck_ML_Job_Resume/backend
+          ssh -i ~/.ssh/id_rsa ec2-user@${{ secrets.HOST_DNS }} << 'EOF'
+            cd FullSatck_ML_Job_Resume/backend
             
             echo "Pulling latest changes..."
             git pull origin main  # Pull latest changes

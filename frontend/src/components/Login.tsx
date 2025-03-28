@@ -15,7 +15,9 @@ const Login = () => {
     try {
       setError(null)
       // console.log(email, password);
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, { email, password });
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, { email, password }
+        ,{withCredentials: true, }
+    );
       // console.log(response);
       localStorage.setItem("token", response.data.token); // Save JWT token in localStorage
       localStorage.setItem("user", email); 

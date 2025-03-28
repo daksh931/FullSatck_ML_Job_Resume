@@ -5,11 +5,10 @@ import authRoutes from "./routes/authRoutes";
 import MatchJobs from "./routes/MatchJobs";
 import axios from "axios"
 import Job from "./models/Job";
-// dotenv.config();
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
-//changes to ec2 with CICD
-
 
 // work locally
 // app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
